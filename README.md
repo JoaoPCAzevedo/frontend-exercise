@@ -12,6 +12,9 @@
 
 ### How to Use
 
+- Create a file in the root directory called `.env.local` and add the following content:
+  `NEXT_PUBLIC_API_URL=https://swapi.dev/api`
+
 #### Install dependencies
 
 You can use one of them `npm`, `yarn`, `pnpm`, I used `pnpm`:

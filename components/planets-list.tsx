@@ -23,17 +23,15 @@ import Link from "next/link";
 import ErrorHandler from "./error-handler";
 
 import { fetcher } from "@/app/lib/fetcher";
+import { Planet } from "@/app/utils/definitions";
+import { extractIdFromUrl } from "@/app/utils/helpers";
 
 /**
  * Definitions
  */
-type Planet = {
-  name: string;
-  climate: string;
-  terrain: string;
-  population: string;
-  url: string;
-};
+interface PlanetListProps {
+  hasPagination?: boolean;
+}
 
 type FetchPlanets = {
   count: number;
@@ -41,19 +39,9 @@ type FetchPlanets = {
 };
 
 /**
- * Helpers
- */
-export function extractIdFromUrl(url: string) {
-  // Extract ID from the planet URL, assuming the URL is in the format: https://swapi.dev/api/planets/{id}/
-  const match = url.match(/\/(\d+)\/$/);
-  const id = match ? match[1] : null;
-
-  return id;
-}
-/**
  * Component
  */
-export default function PlanetsList() {
+export default function PlanetsList({ hasPagination = true }: PlanetListProps) {
   // Constants and hooks
   const rowsPerPage = 10;
   const searchParams = useSearchParams();
@@ -124,7 +112,7 @@ export default function PlanetsList() {
       />
       <Table
         aria-label="Plannets list"
-        bottomContent={
+        bottomContent={hasPagination &&
           <div className="flex w-full justify-center">
             <Pagination
               isCompact

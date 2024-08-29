@@ -63,7 +63,7 @@ export default async function RootLayout({
                 <span className="text-default-600">Developed</span>
                 <p className="text-primary">João Azevedo</p>
                 <span className="text-default-600">to</span>
-                <p className="text-primary">Lumenalta</p>
+                <p className="text-primary">Flecto</p>
               </div>
             </footer>
           </div>

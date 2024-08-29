@@ -3,7 +3,6 @@
 /**
  * Imports
  */
-import useSWR from "swr";
 import {
   Table,
   TableBody,
@@ -15,31 +14,18 @@ import {
 import { Skeleton } from "@nextui-org/skeleton";
 import { Link } from "@nextui-org/link";
 
-import { fetcher } from "@/app/lib/fetcher";
 import ErrorHandler from "@/components/error-handler";
-
-/**
- * Definitions
- */
-type Planet = {
-  name: string;
-  climate: string;
-  terrain: string;
-  population: string;
-  url: string;
-  rotation_period: string;
-};
+import { usePlanet } from "@/app/hooks/usePlanet";
 
 /**
  * Component
  */
 export default function Planet({ params }: { params: { id: string } }) {
   // Constants and hooks
-  const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/planets/${params.id}`;
-  const { data, error, mutate, isLoading } = useSWR<Planet>(endpoint, fetcher);
+  const { planet, isLoading, isError, mutate } = usePlanet(params.id);
 
   // Error handling
-  if (error) {
+  if (isError) {
     return <ErrorHandler mutate={mutate} />;
   }
 
@@ -71,11 +57,11 @@ export default function Planet({ params }: { params: { id: string } }) {
       </TableHeader>
       <TableBody>
         <TableRow>
-          <TableCell>{data?.name}</TableCell>
-          <TableCell>{data?.climate}</TableCell>
-          <TableCell>{data?.terrain}</TableCell>
-          <TableCell>{data?.population}</TableCell>
-          <TableCell>{data?.rotation_period}</TableCell>
+          <TableCell>{planet?.name}</TableCell>
+          <TableCell>{planet?.climate}</TableCell>
+          <TableCell>{planet?.terrain}</TableCell>
+          <TableCell>{planet?.population}</TableCell>
+          <TableCell>{planet?.rotation_period}</TableCell>
         </TableRow>
       </TableBody>
     </Table>
